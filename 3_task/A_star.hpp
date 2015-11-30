@@ -37,25 +37,25 @@ private:
         }
         std::vector<std::pair<State, char>> variants;
         if(prev != 'd'){
-            variants.push_back(std::pair<State, char>(s.up().first, 'u'));
+            variants.push_back(std::pair<State, char>(s.up(), 'u'));
             if (variants[variants.size()-1].first.getheuristic() == INT_MAX) {
                 variants.pop_back();
             }
         }
         if(prev != 'u'){
-            variants.push_back(std::pair<State, char>(s.down().first, 'd'));
+            variants.push_back(std::pair<State, char>(s.down(), 'd'));
             if (variants[variants.size()-1].first.getheuristic() == INT_MAX) {
                 variants.pop_back();
             }
         }
         if(prev != 'l'){
-            variants.push_back(std::pair<State, char>(s.right().first, 'r'));
+            variants.push_back(std::pair<State, char>(s.right(), 'r'));
             if (variants[variants.size()-1].first.getheuristic() == INT_MAX) {
                 variants.pop_back();
             }
         }
         if(prev != 'r'){
-            variants.push_back(std::pair<State, char>(s.left().first, 'l'));
+            variants.push_back(std::pair<State, char>(s.left(), 'l'));
             if (variants[variants.size()-1].first.getheuristic() == INT_MAX) {
                 variants.pop_back();
             }

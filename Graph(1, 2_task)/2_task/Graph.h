@@ -35,8 +35,6 @@ public:
         VertexId getid() {return _id;};
         
         friend class Graph;
-        friend ostream& operator << (ostream& os, const Graph&);
-        friend ostream& operator<<(ostream& os, Graph<int> & Gr);
         
         list<pair<VertexId, int> > _edges;
         int index;

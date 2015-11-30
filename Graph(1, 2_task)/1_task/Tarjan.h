@@ -68,8 +68,8 @@ public:
 
 template<class VertexId>
 list<list<VertexId> > Tarjan(Graph<VertexId>& G){
-    Tarjan_methods<VertexId> meth(G);
-    return meth.maker();
+    Tarjan_methods<VertexId> methods(G);
+    return methods.maker();
 }
 
 #endif /* Tarjan_h */

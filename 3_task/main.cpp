@@ -14,7 +14,8 @@ int main() {
     for (int i = 0; i<9; i++) {
         std::cin >> a[i];
     }
-    State s(a);
+    State s;
+    s.init(a);
     
     if (!s.isCountable()) {
         std::cout << "No";

@@ -37,10 +37,8 @@ public:
         VertexId getid() {return _id;};
         
         friend class Graph;
-        friend ostream& operator << (ostream& os, const Graph&);
-        friend ostream& operator<<(ostream& os, Graph<int> & Gr);
         
-        list<pair<VertexId, int> > _edges;
+        list<pair<VertexId, int> > _edges;                          //список вершин, в которые идут ребра
         int index;
         int lowlink;
         bool onstack;

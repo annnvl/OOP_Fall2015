@@ -12,7 +12,7 @@
 #include <stack>
 
 template<class VertexId>
-class Kosaraju_methods {
+class Kosaraju_methods {                //класс вспомогательных методов и данних
 public:
     Kosaraju_methods(Graph<VertexId>& Gr):G(Gr){};
 private:
@@ -81,12 +81,12 @@ private:
 
 template<class VertexId>
 list<list<VertexId> > Kosaraju(Graph<VertexId>& G){
-    Kosaraju_methods<VertexId> meth(G);
-    return meth.maker();
+    Kosaraju_methods<VertexId> methods(G);
+    return methods.maker();
 }
 
 template<class VertexId>
-void showComponents(list<list<VertexId> >& components){
+void showComponents(list<list<VertexId> >& components){         //печатает компоненты
     int i = 1;
     for (typename list<list<VertexId > >::iterator it = components.begin(); it != components.end(); it++) {
         std::cout << i << " component:\n";

@@ -16,9 +16,9 @@
 #include <utility>
 #include <climits>
 
-class State {
+class State {                                       //состояние, в котором мы находимся
 public:
-    State(int input[]){
+    void init(int input[]){
         if (input) {
             for (int i = 0 ; i < 9; i++) {
                 _field[i] = input[i];
@@ -37,53 +37,57 @@ public:
     int getheuristic(){
         return _heuristic;
     };
-    int getpos(int i, int j){
+    int getpos(int i, int j){               //позиция, в которой пустая клетка
         return _field[i*3+j];
     };
     
-    std::pair<State, bool> up(){
+    State up(){
+        State ans;
         if (_pos < 3) {
-            return std::pair<State, bool>(State(0), 0);
+            return ans.init(0);
         }
         int a[9];
         for (int i = 0 ; i < 9; i++){
             a[i] = _field[i];
         }
         std::swap(a[_pos], a[_pos-3]);
-        return std::pair<State, bool>(State(a), 0);
+        return ans.init(a);
     };
-    std::pair<State, bool> down(){
+    State down(){
+        State ans;
         if (_pos > 5) {
-            return std::pair<State, bool>(State(0), 0);
+            return ans.init(0);
         }
         int a[9];
         for (int i = 0 ; i < 9; i++){
             a[i] = _field[i];
         }
         std::swap(a[_pos], a[_pos+3]);
-        return std::pair<State, bool>(State(a), 0);
+        return ans.init(a);
     };
-    std::pair<State, bool> right(){
+    State right(){
+        State ans;
         if (_pos%3 == 2) {
-            return std::pair<State, bool>(State(0), 0);
+            return ans.init(0);
         }
         int a[9];
         for (int i = 0 ; i < 9; i++){
             a[i] = _field[i];
         }
         std::swap(a[_pos], a[_pos+1]);
-        return std::pair<State, bool>(State(a), 0);
+        return ans.init(a);
     };
-    std::pair<State, bool> left(){
+    State left(){
+        State ans;
         if (!(_pos%3)) {
-            return std::pair<State, bool>(State(0), 0);
+            return ans.init(0);
         }
         int a[9];
         for (int i = 0 ; i < 9; i++){
             a[i] = _field[i];
         }
         std::swap(a[_pos], a[_pos-1]);
-        return std::pair<State, bool>(State(a), 0);
+        return ans.init(a);
     };
     
     bool isCountable(){

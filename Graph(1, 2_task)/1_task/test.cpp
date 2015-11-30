@@ -19,8 +19,15 @@ BOOST_AUTO_TEST_CASE(main_case) {
         Graph<int>* gr = randomgraph(i, 0.007);
     
         list<list<int> > Kcomp = Kosaraju<int>(*gr);
+        for (auto y = Kcomp.begin(); y != Kcomp.end(); y++) {
+            y->sort();
+        }
+        Kcomp.sort([](list<int> a,list<int> b){return a.front() > b.front();});
         list<list<int> > Tcomp = Tarjan<int>(*gr);
-    
+        for (auto y = Tcomp.begin(); y != Tcomp.end(); y++) {
+            y->sort();
+        }
+        Tcomp.sort([](list<int> a,list<int> b){return a.front() > b.front();});
     
         BOOST_CHECK(Kcomp == Tcomp);
     }

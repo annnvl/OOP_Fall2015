@@ -14,7 +14,7 @@
 const int _max = 30000;
 
 template<class VertexId>
-class  Ford_Bellman_methods {
+class  Ford_Bellman_methods {                       //класс вспомогательных методов и данных
 public:
     Ford_Bellman_methods(Graph<VertexId>& Gr):G(Gr),_answer(G.sizeV(), _max){};
     vector<int> maker(int i){
@@ -46,8 +46,8 @@ private:
 
 template<class VertexId>
 vector<int> Ford_Bellman(Graph<VertexId>& G, VertexId vert){
-    Ford_Bellman_methods<VertexId> meth(G);
-    return meth.maker(G._findvertex(vert));
+    Ford_Bellman_methods<VertexId> methods(G);
+    return methods.maker(G._findvertex(vert));
 }
 
 #endif /* Ford_Bellman_h */
