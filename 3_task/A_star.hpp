@@ -16,7 +16,7 @@
 
 class A_star{
 public:
-    A_star(State& s){
+    void getanswer(State& s){
         _limit = s.getheuristic();
         _steps = 0;
         while (!_maker(s, 'n')) {
@@ -71,13 +71,14 @@ private:
         }
         return 0;
     };
-
+    
     int _limit;
     int _steps;
 };
 
 std::stack<char> solve(State& s){
-    A_star meth(s);
+    A_star meth;
+    meth.getanswer(s);
     return meth._algorihtm;
 }
 
