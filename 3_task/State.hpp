@@ -18,7 +18,7 @@
 
 class State {                                       //состояние, в котором мы находимся
 public:
-    void init(int input[]){
+    void init(int input[]){                         //инициализация на основе массива
         if (input) {
             for (int i = 0 ; i < 9; i++) {
                 _field[i] = input[i];
@@ -41,7 +41,7 @@ public:
         return _field[i*3+j];
     };
     
-    State up(){
+    State up(){                                         //куда перемещается пустая клетка
         State ans;
         if (_pos < 3) {
             return ans.init(0);
