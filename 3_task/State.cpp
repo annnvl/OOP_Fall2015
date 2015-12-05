@@ -87,7 +87,7 @@ int State::_inversions(){
     int a[8];
     int j = 0;
     for (int i = 0; i<9; i++) {
-        if (_field[i] == 0) {
+        if (_field[i] != 0) {
             a[j] = _field[i];
             j++;
         }
@@ -107,5 +107,6 @@ int State::_inversions(){
         }
         answer+=(i-j);
     }
+   // std::cout << answer << " ";
     return answer;
 }

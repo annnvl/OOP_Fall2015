@@ -14,11 +14,10 @@ int main() {
     for (int i = 0; i<9; i++) {
         std::cin >> a[i];
     }
-    State s;
-    s.init(a);
+    State s(a);
     
     if (!s.isCountable()) {
-        std::cout << "No";
+        std::cout << "No\n";
         return 0;
     }
     

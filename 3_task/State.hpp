@@ -16,9 +16,9 @@
 #include <utility>
 #include <climits>
 
-class State {                                       //состояние, в котором мы находимся
+class State {
 public:
-    void init(int input[]){                         //инициализация на основе массива
+    State(int input[]){
         if (input) {
             for (int i = 0 ; i < 9; i++) {
                 _field[i] = input[i];
@@ -37,64 +37,60 @@ public:
     int getheuristic(){
         return _heuristic;
     };
-    int getpos(int i, int j){               //позиция, в которой пустая клетка
+    int getpos(int i, int j){
         return _field[i*3+j];
     };
     
-    State up(){                                         //куда перемещается пустая клетка
-        State ans;
+    std::pair<State, bool> up(){
         if (_pos < 3) {
-            return ans.init(0);
+            return std::pair<State, bool>(State(0), 0);
         }
         int a[9];
         for (int i = 0 ; i < 9; i++){
             a[i] = _field[i];
         }
         std::swap(a[_pos], a[_pos-3]);
-        return ans.init(a);
+        return std::pair<State, bool>(State(a), 0);
     };
-    State down(){
-        State ans;
+    std::pair<State, bool> down(){
         if (_pos > 5) {
-            return ans.init(0);
+            return std::pair<State, bool>(State(0), 0);
         }
         int a[9];
         for (int i = 0 ; i < 9; i++){
             a[i] = _field[i];
         }
         std::swap(a[_pos], a[_pos+3]);
-        return ans.init(a);
+        return std::pair<State, bool>(State(a), 0);
     };
-    State right(){
-        State ans;
+    std::pair<State, bool> right(){
         if (_pos%3 == 2) {
-            return ans.init(0);
+            return std::pair<State, bool>(State(0), 0);
         }
         int a[9];
         for (int i = 0 ; i < 9; i++){
             a[i] = _field[i];
         }
         std::swap(a[_pos], a[_pos+1]);
-        return ans.init(a);
+        return std::pair<State, bool>(State(a), 0);
     };
-    State left(){
-        State ans;
+    std::pair<State, bool> left(){
         if (!(_pos%3)) {
-            return ans.init(0);
+            return std::pair<State, bool>(State(0), 0);
         }
         int a[9];
         for (int i = 0 ; i < 9; i++){
             a[i] = _field[i];
         }
         std::swap(a[_pos], a[_pos-1]);
-        return ans.init(a);
+        return std::pair<State, bool>(State(a), 0);
     };
     
     bool isCountable(){
         if(((_pos/3)+_inversions())%2){
-            return 1;
+            return 0;
         }
-        return 0;
+        return 1;
     };
 private:
     int _countManhattanDistance();

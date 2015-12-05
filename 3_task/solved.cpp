@@ -87,9 +87,9 @@ public:
 
     bool isCountable(){
         if(((_pos/3)+_inversions())%2){
-            return 1;
+            return 0;
         }
-        return 0;
+        return 1;
     };
 private:
     int _countManhattanDistance();
@@ -187,7 +187,7 @@ int State::_inversions(){
     int a[8];
     int j = 0;
     for (int i = 0; i<9; i++) {
-        if (_field[i] == 0) {
+        if (_field[i] != 0) {
             a[j] = _field[i];
             j++;
         }
