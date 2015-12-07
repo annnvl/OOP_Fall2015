@@ -9,24 +9,22 @@
 #ifndef Ford_Bellman_h
 #define Ford_Bellman_h
 
-#include "Graph.h"
-
 const int _max = 30000;
 
 template<class VertexId>
-class  Ford_Bellman_methods {                       //класс вспомогательных методов и данных
+class  Ford_Bellman_methods {
 public:
-    Ford_Bellman_methods(Graph<VertexId>& Gr):G(Gr),_answer(G.sizeV(), _max){};
-    vector<int> maker(int i){
-        _answer[i] = 0;
+    Ford_Bellman_methods(Graph<VertexId>& Gr):G(Gr),_answer(G.size(), _max){};
+    std::vector<int> maker(int j){
+        _answer[j] = 0;
         while (true) {
             _flag = 0;
-            for (int j = 0; j < G.sizeV(); j++) {
-                for(typename list<pair<VertexId, int> >::iterator it = G._vertexes[j]._edges.begin(); it != G._vertexes[j]._edges.end(); ++it){
-                    if (_answer[j] < _max) {
-                        int k = G._findvertex(it->first);
-                        if (_answer[k] > _answer[j] + it->second) {
-                            _answer[k] = _answer[j] + it->second;
+            for (auto it = G.begin(); it != G.end(); ++it) {
+                for(auto i = it->second.begin(); i != it->second.end(); ++i){
+                    if (_answer[it->first] < _max) {
+                        int k = i->first;
+                        if (_answer[k] > (_answer[it->first] + i->second)) {
+                            _answer[k] = _answer[it->first] + i->second;
                             _flag = 1;
                         }
                     }
@@ -40,14 +38,15 @@ public:
     };
 private:
     Graph<VertexId>& G;
-    vector<int> _answer;
+    std::vector<int> _answer;
     int _flag;      //показывает, изменилось ли что-то на текущей фазе
 };
 
 template<class VertexId>
-vector<int> Ford_Bellman(Graph<VertexId>& G, VertexId vert){
-    Ford_Bellman_methods<VertexId> methods(G);
-    return methods.maker(G._findvertex(vert));
+std::vector<int> Ford_Bellman(Graph<VertexId>& G, VertexId vert){
+    Ford_Bellman_methods<VertexId> meth(G);
+    int id = G.getid(vert);
+    return meth.maker(id);
 }
 
 #endif /* Ford_Bellman_h */
