@@ -210,18 +210,29 @@ int State::_inversions(){
     return answer;
 }
 
+class Comparator {
+public:
+    bool operator()(const State& one,const State& another)const{
+        if ((one.getsteps()+one.getheuristic()) > (another.getsteps()+another.getheuristic())) {
+            return 1;
+        }
+        return 0;
+    };
+};
+
 class A_star{
 public:
-    A_star(State& s){
+    void getanswer(State& s){
         _limit = s.getheuristic();
         _steps = 0;
-        while (!_maker(s, 'n')) {
+        _opened.insert(s);
+        while (!_maker(s)) {
             _limit++;
         }
     };
-    std::stack<char> _algorihtm;
+    std::string answer;
 private:
-    bool _maker(State& s, char prev){                   //второй аргумент - предыдущий шаг, иначе можем уйти в бесконечную рекурсию
+    bool _maker(State& s){
         if (_steps > _limit) {
             return 0;
         }
@@ -229,52 +240,62 @@ private:
             return 0;
         }
         if (!s.getheuristic()) {
+            answer = s.getpath();
             return 1;
         }
-        std::vector<std::pair<State, char> > variants;
-        if(prev != 'd'){
-            variants.push_back(std::pair<State, char>(s.up().first, 'u'));
-            if (variants[variants.size()-1].first.getheuristic() == INT_MAX) {
-                variants.pop_back();
+        char prev = s.getlast();
+        State newst = s.right();
+        if (prev != 'l') {
+            newst = s.right();
+            int i = _opened.count(newst);
+            if ((newst.getheuristic() != INT_MAX)&&(_opened.count(newst))) {
+                variants.push(newst);
+                _opened.insert(newst);
             }
         }
-        if(prev != 'u'){
-            variants.push_back(std::pair<State, char>(s.down().first, 'd'));
-            if (variants[variants.size()-1].first.getheuristic() == INT_MAX) {
-                variants.pop_back();
+        if (prev != 'r') {
+            newst = s.left();
+            if ((newst.getheuristic() != INT_MAX)&&(_opened.count(newst))) {
+                variants.push(newst);
+                _opened.insert(newst);
             }
         }
-        if(prev != 'l'){
-            variants.push_back(std::pair<State, char>(s.right().first, 'r'));
-            if (variants[variants.size()-1].first.getheuristic() == INT_MAX) {
-                variants.pop_back();
+        if (prev != 'd') {
+            newst = s.up();
+            if ((newst.getheuristic() != INT_MAX)&&(_opened.count(newst))) {
+                variants.push(newst);
+                _opened.insert(newst);
             }
         }
-        if(prev != 'r'){
-            variants.push_back(std::pair<State, char>(s.left().first, 'l'));
-            if (variants[variants.size()-1].first.getheuristic() == INT_MAX) {
-                variants.pop_back();
+        if (prev != 'u') {
+            newst = s.down();
+            if ((newst.getheuristic() != INT_MAX)&&(_opened.count(newst))) {
+                variants.push(newst);
+                _opened.insert(newst);
             }
         }
-        std::sort(variants.begin(), variants.end(), pred);
-        for (size_t i = 0; i < variants.size(); i++) {
+        while (!variants.empty()) {
+            newst = variants.top();
+            variants.pop();
             _steps++;
-            if (_maker(variants[i].first, variants[i].second)) {
-                _algorihtm.push(variants[i].second);
+            if (_maker(newst)) {
                 return 1;
             }
             _steps--;
         }
         return 0;
     };
-
+    
     int _limit;
     int _steps;
+    std::priority_queue<State, std::vector<State>, Comparator> variants;
+    std::set<State, Comparator> _opened;      //просмотренные вершины
 };
 
-std::stack<char> solve(State& s){
-    A_star meth(s);
-    return meth._algorihtm;
+std::string solve(State& s){
+    A_star meth;
+    meth.getanswer(s);
+    return meth.answer;
 }
 
 int main() {
