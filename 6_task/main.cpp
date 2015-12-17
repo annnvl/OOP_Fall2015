@@ -10,7 +10,7 @@
 
 int main() {
     Bricks b;
-    b.getconfig("/Users/no_love_no_problem/Documents/Xcode/Bricks/Bricks/input.txt");
+    b.getconfig("input.txt");
     b.FordFulkerson();
     return 0;
 }
